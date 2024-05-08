@@ -14,6 +14,7 @@ if [ -z "$remote_commit_id" ]; then
     exit 1
 fi
 # 删除远程分支的提交
+git revert $remote_commit_id
 git push origin ":$remote_commit_id"
 
 echo "已删除远程提交ID为 $remote_commit_id 的提交"
