@@ -6,18 +6,13 @@ current_directory=$(dirname "$(realpath "$0")")
 # 切换到当前目录
 cd "$current_directory"
 
-# 检查是否有未提交的更改
-if ! git diff --quiet; then
-    # 将未提交的更改暂存起来
-    git stash save "Stashed changes before reverting to previous commit"
+# 检查是否有已经暂存但未提交的更改
+if ! git diff --cached --quiet; then
+    echo "Error: There are changes staged for commit. Please unstage them before proceeding."
+    exit 1
 fi
 
-# 回退到上一次提交
-git reset --hard HEAD^
+# 回退到上一次提交，但保留更改到暂存区
+git reset --soft HEAD^
 
-# 恢复之前暂存的更改（如果有的话）
-if [ $(git stash list | wc -l) -gt 0 ]; then
-    git stash pop
-fi
-
-echo "Successfully reverted to the previous commit."
+echo "Successfully reverted to the state before adding changes to the staging area."
