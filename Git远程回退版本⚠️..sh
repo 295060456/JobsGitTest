@@ -1,5 +1,6 @@
 #!/bin/bash
 # 放在 .git 文件夹同级
+# ❤️要回退远程版本，首先需要有远程服务器的删除代码的权限❤️
 
 # 获取当前文件夹路径
 current_directory=$(dirname "$(realpath "$0")")
