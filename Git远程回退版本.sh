@@ -9,18 +9,18 @@ cd "$current_directory"
 rollback_to_commit() {
     commit_id=$1
     git reset --hard "$commit_id"
+    git push --force
 }
-
 # 获取用户输入
 read -p "请输入提交的ID（按回车键回退到上一个版本）: " input_commit_id
-
 # 检查是否有输入
 if [ -z "$input_commit_id" ]; then
     # 如果没有输入，则回退到上一个版本
     git reset --hard HEAD^
-    echo "已回退到上一个版本"
+    git push --force
+    echo "已回退到上一个版本，并强制推送到远程仓库"
 else
     # 否则，回退到指定的提交ID版本
     rollback_to_commit "$input_commit_id"
-    echo "已回退到提交ID为 $input_commit_id 的版本"
+    echo "已回退到提交ID为 $input_commit_id 的版本，并强制推送到远程仓库"
 fi
